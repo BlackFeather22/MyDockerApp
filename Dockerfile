@@ -1,20 +1,14 @@
-﻿FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
-WORKDIR /app
-EXPOSE 80
-EXPOSE 443
-
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["MyDockerApp.csproj", "./"]
-RUN dotnet restore "MyDockerApp.csproj"
+COPY MyDockerApp.csproj .
+RUN dotnet restore MyDockerApp.csproj
 COPY . .
-WORKDIR "/src/"
-RUN dotnet build "MyDockerApp.csproj" -c Release -o /app/build
+RUN dotnet build MyDockerApp.csproj -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "MyDockerApp.csproj" -c Release -o /app/publish
+RUN dotnet publish MyDockerApp.csproj -c Release -o /app/publish
 
-FROM base AS final
-WORKDIR /app
-COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "MyDockerApp.dll"]
+FROM nginx:alpine AS final
+WORKDIR /usr/share/nginx/html
+COPY --from=publish /app/publish/wwwroot .
+COPY nginx.conf /etc/nginx/nginx.conf

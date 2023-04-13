@@ -1,0 +1,41 @@
+@page "/azureFunctionTest"
+@inject HttpClient Http
+
+<PageTitle>Azure Simple Function Call Test</PageTitle>
+
+<h1>Weather forecast</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+
+@if (name == "")
+{
+    <p>
+        <em>Loading...</em>
+    </p>
+}
+else
+{
+
+    
+    <table class="mytable">
+        <thead>
+        <tr>
+            <th>Name</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@name</td>
+            </tr>
+        </tbody>
+    </table>
+}
+
+@code {
+    private string name;
+
+    protected override async Task OnInitializedAsync()
+    {
+        name = await ChosenFunctionAppCalls.CallFirstFunction("John");
+    }
+}

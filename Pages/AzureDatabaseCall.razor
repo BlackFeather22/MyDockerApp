@@ -1,0 +1,63 @@
+@page "/azureDatabaseCall"
+
+<style>
+    .mytable {
+        border-style: solid;
+        width: 100%;
+    }
+    
+    .mytable th,.mytable td {
+        text-align: left;
+        padding: 1rem;
+        border: 1px solid black;
+    }
+</style>
+
+<PageTitle>Azure Database Function Call Test</PageTitle>
+
+<h1>Weather forecast</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+
+
+
+@if (test == null)
+{
+    <p>
+        <em>Loading...</em>
+    </p>
+}
+else
+{
+
+    <table class="mytable">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var data in test)
+        {
+            <tr>
+                <td>@data.Id</td>
+                <td>@data.Name</td>
+            </tr>
+        }
+                
+
+        </tbody>
+    </table>
+}
+
+@code {
+    // private IEnumerable<DatabaseField> databaseFields;
+    private List<DatabaseField> test = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        test = await ChosenFunctionAppCalls.CallDatabaseFunction();
+    }
+}
