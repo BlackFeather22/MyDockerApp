@@ -10,7 +10,7 @@ public class ChosenFunctionAppCalls
         const string key = "9o7I4iVhnZxh8ID_a40irBaM97NadICnLr7JBdOZWEcFAzFuyTf6AQ";
         yourName = HttpUtility.UrlEncode(yourName);
         
-        var url = $"https://{functionApp}.azurewebsites.net/api/{functionName}?code={key}==&name={yourName}/cors";
+        var url = $"https://{functionApp}.azurewebsites.net/api/{functionName}?code={key}==&name={yourName}";
         Console.WriteLine($"Encoded URL: {url}");
         
         using var client = new HttpClient();
@@ -29,7 +29,7 @@ public class ChosenFunctionAppCalls
         const string key = "7Yf1DWftjuwfreuVbS-mTQyOOoo7gWb0IMwFaqL0pOdTAzFulQ7Xxg==";
         const string functionName = "databasefunction";
         
-        var url = $"https://{functionApp}.azurewebsites.net/api/{functionName}?code={key}/cors";
+        var url = $"https://{functionApp}.azurewebsites.net/api/{functionName}?code={key}";
         Console.WriteLine($"Encoded URL: {url}");
         
         using var client = new HttpClient();
